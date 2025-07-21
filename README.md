@@ -18,4 +18,4 @@ Uma calculadora simples desenvolvida em linguagem C, capaz de realizar operaçõ
 1. Clone o repositório:
 
 ```bash
-git clone 
+git clone https://github.com/Rafael-Augusto-Lino/projeto-c.git
