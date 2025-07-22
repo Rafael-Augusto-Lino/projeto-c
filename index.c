@@ -20,6 +20,13 @@ typedef struct
 
 } cadastro_produto;
 
+/*variáveis globais*/
+int c;
+int opcao_menu;
+int total_products = 0;
+char user[23]; /*variável global*/
+cadastro_produto produtos[MAX_PRODUCTS];
+
 void limpar_tela()
 {
 
@@ -41,15 +48,75 @@ void pause(int segundos)
 #endif
 }
 
+void cadastrar_produto()
+{
+
+    printf("serviço acessado com sucesso!");
+
+    pause(3);
+    limpar_tela();
+
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+
+    cadastro_produto *p = &produtos[total_products]; /* o * cria o ponteiro e o & acessa o endereço de memória necessário de
+    determinado array*/
+
+    /*cria um ponteiro chamado p do tipo struct que vai sempre apontar para
+    o struct nescesário que está dentro do array produtos( a variável total_products define qual é o struct necessário)*/
+
+    strcpy(p->name_user, user);
+
+    printf("Digite o nome do produto:\n");
+    fgets(p->product, sizeof(p->product), stdin); /*acessa o campo product da struct que p aponta.*/
+
+    printf("Digite a sigla da moeda do país:\n");
+    fgets(p->currency, sizeof(p->currency), stdin);
+
+    printf("Preço do produto:\n");
+    scanf("%f", &p->price);
+
+    while ((c = getchar()) != '\n' && c != EOF)
+        ;
+
+    printf("Descrição do produto:\n");
+    fgets(p->description, sizeof(p->description), stdin);
+
+    total_products++;
+
+    FILE *arquivo = fopen("lista.txt", "a");
+
+    fprintf(arquivo, "product: %s\n currency: %s\n user: %s\n description: %s\n price: %.2f\n \n\n\n\n", p->product, p->currency, p->name_user, p->description, p->price);
+}
+
+void deletar_produtos()
+{
+
+    printf("Função em desenvolvimento");
+    return 1;
+}
+
+void listar_produtos()
+{
+
+    FILE *arquivo = fopen("produtos.txt", "r");
+
+    if (arquivo == NULL)
+    {
+        printf("arquivo não encontrado");
+
+        return 2;
+    }
+
+    printf("lista de produtos");
+}
+
 int main()
 {
 
-    int c;
-    int opcao_menu;
-    int total_products = 0;
-    char user[23]; /*variável global*/
     cadastro_produto produtos[MAX_PRODUCTS];
 
+    printf("digite seu nome");
     scanf("%22s", user);
 
     printf("Escolha o serviço nescessário:\n");
@@ -60,60 +127,16 @@ int main()
 
     if (opcao_menu == 1)
     {
-        printf("serviço acessado com sucesso!");
-
-        pause(3);
-        limpar_tela();
-
-        while ((c = getchar()) != '\n' && c != EOF)
-            ;
-
-        cadastro_produto *p = &produtos[total_products]; /* o * cria o ponteiro e o & acessa o endereço de memória necessário de
-        determinado array*/
-
-        /*cria um ponteiro chamado p do tipo struct que vai sempre apontar para
-        o struct nescesário que está dentro do array produtos( a variável total_products define qual é o struct necessário)*/
-
-        strcpy(p->name_user, user);
-
-        printf("Digite o nome do produto:\n");
-        fgets(p->product, sizeof(p->product), stdin); /*acessa o campo product da struct que p aponta.*/
-
-        printf("Digite a sigla da moeda do país:\n");
-        fgets(p->currency, sizeof(p->currency), stdin);
-
-        printf("Preço do produto:\n");
-        scanf("%f", &p->price);
-
-        while ((c = getchar()) != '\n' && c != EOF)
-            ;
-
-        printf("Descrição do produto:\n");
-        fgets(p->description, sizeof(p->description), stdin);
-
-        total_products++;
-
-        FILE *arquivo = fopen("lista.txt", "a");
-
-        fprintf(arquivo, "product: %s\n currency: %s\n user: %s\n description: %s\n price: %.2f\n \n\n\n\n", p->product, p->currency, p->name_user, p->description, p->price);
+        cadastrar_produto();
     }
     if (opcao_menu == 2)
     {
-        printf("Função em desenvolvimento");
-        return 1;
+        deletar_produtos();
     }
     if (opcao_menu == 3)
     {
-        FILE *arquivo = fopen("produtos.txt", "r");
 
-        if (arquivo == NULL)
-        {
-            printf("arquivo não encontrado");
-
-            return 2;
-        }
-
-        printf("lista de produtos");
+        deletar_produtos();
     }
 
     return 0;
