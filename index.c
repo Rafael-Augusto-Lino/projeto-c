@@ -54,6 +54,8 @@ int main()
 
     printf("Escolha o serviço nescessário:\n");
     printf("Digite 1 para realizar cadastro de produto\n");
+    printf("Digite 2 para deletar produtos cadastrados\n");
+    printf("digite 3 para acessar produtos cadastrados\n");
     scanf("%d", &opcao_menu);
 
     if (opcao_menu == 1)
@@ -90,6 +92,28 @@ int main()
         fgets(p->description, sizeof(p->description), stdin);
 
         total_products++;
+
+        FILE *arquivo = fopen("lista.txt", "a");
+
+        fprintf(arquivo, "product: %s\n currency: %s\n user: %s\n description: %s\n price: %.2f\n \n\n\n\n", p->product, p->currency, p->name_user, p->description, p->price);
+    }
+    if (opcao_menu == 2)
+    {
+        printf("Função em desenvolvimento");
+        return 1;
+    }
+    if (opcao_menu == 3)
+    {
+        FILE *arquivo = fopen("produtos.txt", "r");
+
+        if (arquivo == NULL)
+        {
+            printf("arquivo não encontrado");
+
+            return 2;
+        }
+
+        printf("lista de produtos");
     }
 
     return 0;
