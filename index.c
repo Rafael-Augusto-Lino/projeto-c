@@ -84,7 +84,17 @@ void cadastrar_produto()
 
     total_products++;
 
-    FILE *arquivo = fopen("lista.txt", "a");
+    FILE *arquivo = fopen("lista.txt", "a"); /*Você não tenha permissão para criar o arquivo.
+                                             u esteja em um diretório inexistente ou protegido*/
+
+    if (arquivo == NULL)
+    {
+
+        printf("Erro\n");
+        printf("Talvez você não tenha permissão para criar o documento \nou esteja em um diretório inexistente/protegido");
+
+        return 2;
+    }
 
     fprintf(arquivo, "product: %s\n currency: %s\n user: %s\n description: %s\n price: %.2f\n \n\n\n\n", p->product, p->currency, p->name_user, p->description, p->price);
 }
@@ -111,6 +121,30 @@ void listar_produtos()
     printf("lista de produtos");
 }
 
+void lista_comandos()
+{
+    printf("Lista de comandos\n");
+    printf("Digite 1 para realizar cadastro de produto\n");
+    printf("Digite 2 para deletar produtos cadastrados\n");
+    printf("digite 3 para acessar produtos cadastrados\n");
+    printf("digite 4 para lista de comandos");
+    printf("digite 5 para fechar progama\n");
+    printf("digite 10 para acessar termos de condição ou licença do software\n");
+}
+
+void termos_e_condições()
+{
+
+    FILE *arquivo_termo = fopen("TERMS.txt", "r");
+
+    if (arquivo_termo == NULL)
+    {
+        printf("termos e condições não baixados em seu computador");
+
+        return 3;
+    }
+}
+
 int main()
 {
 
@@ -119,25 +153,41 @@ int main()
     printf("digite seu nome");
     scanf("%22s", user);
 
-    printf("Escolha o serviço nescessário:\n");
-    printf("Digite 1 para realizar cadastro de produto\n");
-    printf("Digite 2 para deletar produtos cadastrados\n");
-    printf("digite 3 para acessar produtos cadastrados\n");
-    scanf("%d", &opcao_menu);
-
-    if (opcao_menu == 1)
-    {
-        cadastrar_produto();
-    }
-    if (opcao_menu == 2)
-    {
-        deletar_produtos();
-    }
-    if (opcao_menu == 3)
+    do
     {
 
-        deletar_produtos();
-    }
+        printf("Escolha o serviço nescessário:\n");
+        printf("Digite 1 para realizar cadastro de produto\n");
+        printf("Digite 2 para deletar produtos cadastrados\n");
+        printf("digite 3 para acessar produtos cadastrados\n");
+        printf("digite 4 para lista de comandos");
+        printf("digite 5 para fechar progama\n");
+        scanf("%d", &opcao_menu);
+
+        if (opcao_menu == 1)
+        {
+            cadastrar_produto();
+            pause(3);
+        }
+        if (opcao_menu == 2)
+        {
+            deletar_produtos();
+            pause(3);
+        }
+        if (opcao_menu == 3)
+        {
+            deletar_produtos();
+            pause(3);
+        }
+        if (opcao_menu == 4)
+        {
+            lista_comandos();
+        }
+        if (opcao_menu == 10)
+        {
+        }
+
+    } while (opcao_menu != 5);
 
     return 0;
 }
