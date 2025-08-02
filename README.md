@@ -1,19 +1,18 @@
-# Calculadora em C
+# software de cadastro e controle de produtos
 
-Uma calculadora simples desenvolvida em linguagem C, capaz de realizar operações básicas como adição, subtração, multiplicação e divisão. Este projeto foi criado com fins educacionais como parte do curso técnico de Informática.
-
----
-
-## 📌 Funcionalidades
-
-- ✅ Soma, subtração, multiplicação e divisão
-- ✅ Interface de terminal simples
-- ✅ Código comentado e organizado
-- ✅ Compilação via GCC
+Este progama é um software de cadastro e controtoles de produtos que por enquanto está tudo sendo feito pelo terminal. Este mesmo foi destinado exclusivamente para o crescimento pessoal nas habilidades em c. Ou seja não interprete que esse software foi destinado à empresas, aplicação real no mundo comercial, ou mercado de trabalho. 
 
 ---
 
-## 🚀 Como usar
+## Funcionalidades
+
+- ✅ sistema de cadastro de produtos por meio de arquivos .txt
+- ✅ sistema de leitura de produtos
+
+
+---
+
+## Como usar
 
 1. Clone o repositório:
 
