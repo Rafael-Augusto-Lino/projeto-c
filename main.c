@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -46,6 +47,53 @@ void pause(int segundos)
 #else
     sleep(segundos);
 #endif
+}
+
+void mostrar_termos_e_condições()
+{
+    printf("===========================================================================\n");
+    printf("TERMS AND CONDITIONS - APLICATIVO DE CONTROLE E CADASTRO DE PRODUTOS\n");
+    printf("===========================================================================\n\n");
+
+    printf("1. ACEITAÇÃO DOS TERMOS\n");
+    printf("Ao utilizar este aplicativo, você concorda em cumprir estes Termos e Condições.\n");
+    printf("Caso não concorde, não utilize este software.\n\n");
+
+    printf("2. USO DO APLICATIVO\n");
+    printf("O aplicativo destina-se exclusivamente ao gerenciamento interno de produtos,\n");
+    printf("incluindo cadastro, alteração e controle de estoque. O usuário compromete-se\n");
+    printf("a utilizar o sistema para fins legais e éticos, não prejudicando a integridade\n");
+    printf("do sistema ou dos dados.\n\n");
+
+    printf("3. RESPONSABILIDADES DO USUÁRIO\n");
+    printf("- O usuário é responsável pela veracidade e integridade dos dados cadastrados.\n");
+    printf("- Recomenda-se realizar backups periódicos para evitar perdas de dados.\n");
+    printf("- O desenvolvedor não se responsabiliza por perdas ou danos decorrentes do uso.\n\n");
+
+    printf("4. PROPRIEDADE INTELECTUAL\n");
+    printf("Todos os direitos do software, incluindo código-fonte e funcionalidades, são\n");
+    printf("reservados ao desenvolvedor. É proibida a reprodução ou modificação não autorizada.\n\n");
+
+    printf("5. PRIVACIDADE E DADOS\n");
+    printf("Os dados armazenados serão utilizados exclusivamente para fins do gerenciamento\n");
+    printf("no aplicativo, respeitando as normas de privacidade vigentes.\n\n");
+
+    printf("6. ATUALIZAÇÕES E MANUTENÇÃO\n");
+    printf("O desenvolvedor pode atualizar ou modificar o software a qualquer momento, sem\n");
+    printf("aviso prévio.\n\n");
+
+    printf("7. LIMITAÇÃO DE RESPONSABILIDADE\n");
+    printf("O software é fornecido \"no estado em que se encontra\", sem garantias. O desenvolvedor\n");
+    printf("não se responsabiliza por quaisquer danos decorrentes do uso.\n\n");
+
+    printf("8. ALTERAÇÕES NOS TERMOS\n");
+    printf("Estes termos podem ser alterados a qualquer momento, sendo a versão vigente\n");
+    printf("disponível no software.\n\n");
+
+    printf("9. LEI APLICÁVEL E FORO\n");
+    printf("Estes termos são regidos pela legislação brasileira, com foro na comarca de [cidade].\n\n");
+
+    printf("===========================================================================\n");
 }
 
 void cadastrar_produto()
@@ -135,13 +183,35 @@ void lista_comandos()
 void termos_e_condições()
 {
 
-    FILE *arquivo_termo = fopen("TERMS.txt", "r");
+    char resp;
 
-    if (arquivo_termo == NULL)
+    printf("você que os termos e condições sejam printados no terminal?\n");
+    printf("s\\n\n");
+    scanf("%c", resp);
+
+    resp = tolower(resp);
+
+    switch (resp)
     {
-        printf("termos e condições não baixados em seu computador");
+    case 'n':
+        FILE *arquivo_termo = fopen("TERMS.txt", "r");
 
-        return 3;
+        if (arquivo_termo == NULL)
+        {
+            printf("termos e condições não baixados em seu computador");
+
+            return 3;
+        }
+        break;
+
+    case 's':
+
+        mostrar_termos_e_condições();
+
+        break;
+
+    default:
+        break;
     }
 }
 
