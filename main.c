@@ -94,6 +94,8 @@ void mostrar_termos_e_condicoes()
     printf("Estes termos são regidos pela legislação brasileira, com foro na comarca de [cidade].\n\n");
 
     printf("===========================================================================\n");
+
+    return;
 }
 
 void cadastrar_produto()
@@ -185,7 +187,7 @@ void termos_e_condicoes()
 
     char resp;
 
-    printf("você que os termos e condições sejam printados no terminal?\n");
+    printf("você quer os termos e condições sejam printados no terminal?\n");
     printf("s\n");
     scanf(" %c", &resp);
 
@@ -220,8 +222,6 @@ void termos_e_condicoes()
 
 int main()
 {
-
-    cadastro_produto produtos[MAX_PRODUCTS];
 
     printf("digite seu nome");
     scanf("%22s", user);
