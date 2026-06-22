@@ -49,7 +49,7 @@ void pause(int segundos)
 #endif
 }
 
-void mostrar_termos_e_condições()
+void mostrar_termos_e_condicoes()
 {
     printf("===========================================================================\n");
     printf("TERMS AND CONDITIONS - APLICATIVO DE CONTROLE E CADASTRO DE PRODUTOS\n");
@@ -180,33 +180,36 @@ void lista_comandos()
     printf("digite 10 para acessar termos de condição ou licença do software\n");
 }
 
-void termos_e_condições()
+void termos_e_condicoes()
 {
 
     char resp;
 
     printf("você que os termos e condições sejam printados no terminal?\n");
-    printf("s\\n\n");
-    scanf("%c", resp);
+    printf("s\n");
+    scanf(" %c", &resp);
 
     resp = tolower(resp);
 
     switch (resp)
     {
     case 'n':
+    {
         FILE *arquivo_termo = fopen("TERMS.txt", "r");
 
         if (arquivo_termo == NULL)
         {
             printf("termos e condições não baixados em seu computador");
-
-            return 3;
+            return 2;
         }
+
+        fclose(arquivo_termo);
         break;
+    }
 
     case 's':
 
-        mostrar_termos_e_condições();
+        mostrar_termos_e_condicoes();
 
         break;
 
@@ -255,6 +258,7 @@ int main()
         }
         if (opcao_menu == 10)
         {
+            termos_e_condicoes();
         }
 
     } while (opcao_menu != 5);
