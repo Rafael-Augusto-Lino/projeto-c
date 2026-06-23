@@ -3,6 +3,9 @@
 #include <string.h>
 #include <ctype.h>
 
+// inclusão de outros arquivos nesse main
+#include "../Headers/sistema.h"
+
 #ifdef _WIN32
 #include <windows.h>
 #else
@@ -27,27 +30,6 @@ int opcao_menu;
 int total_products = 0;
 char user[23]; /*variável global*/
 cadastro_produto produtos[MAX_PRODUCTS];
-
-void limpar_tela()
-{
-
-#ifdef _WIN32
-    system("cls");
-
-#else
-    system("clear");
-
-#endif
-}
-
-void pause(int segundos)
-{
-#ifdef _WIN32
-    Sleep(segundos * 1000);
-#else
-    sleep(segundos);
-#endif
-}
 
 void mostrar_termos_e_condicoes()
 {
@@ -98,13 +80,19 @@ void mostrar_termos_e_condicoes()
     return;
 }
 
-void cadastrar_produto()
+int cadastrar_produto()
 {
 
     printf("serviço acessado com sucesso!");
 
     pause(3);
     limpar_tela();
+
+    if (total_products >= MAX_PRODUCTS)
+    {
+        printf("Limite de produtos atingido. Não é possível cadastrar mais produtos.\n");
+        return 0;
+    }
 
     while ((c = getchar()) != '\n' && c != EOF)
         ;
@@ -135,7 +123,7 @@ void cadastrar_produto()
     total_products++;
 
     FILE *arquivo = fopen("lista.txt", "a"); /*Você não tenha permissão para criar o arquivo.
-                                             u esteja em um diretório inexistente ou protegido*/
+                                             ou esteja em um diretório inexistente ou protegido*/
 
     if (arquivo == NULL)
     {
@@ -147,9 +135,11 @@ void cadastrar_produto()
     }
 
     fprintf(arquivo, "product: %s\n currency: %s\n user: %s\n description: %s\n price: %.2f\n \n\n\n\n", p->product, p->currency, p->name_user, p->description, p->price);
+    fclose(arquivo);
+    return 0;
 }
 
-void deletar_produtos()
+int deletar_produtos()
 {
 
     printf("Função em desenvolvimento");
@@ -165,21 +155,26 @@ void listar_produtos()
     {
         printf("arquivo não encontrado");
 
-        return 2;
+        return;
     }
 
     printf("lista de produtos");
+    fclose(arquivo);
 }
 
-void lista_comandos()
+int lista_comandos()
 {
+    int numero;
     printf("Lista de comandos\n");
     printf("Digite 1 para realizar cadastro de produto\n");
     printf("Digite 2 para deletar produtos cadastrados\n");
     printf("digite 3 para acessar produtos cadastrados\n");
-    printf("digite 4 para lista de comandos");
+    printf("digite 4 para lista de comandos\n");
     printf("digite 5 para fechar progama\n");
     printf("digite 10 para acessar termos de condição ou licença do software\n");
+    scanf("%d", &numero);
+    pause(2);
+    return numero;
 }
 
 void termos_e_condicoes()
@@ -201,8 +196,8 @@ void termos_e_condicoes()
 
         if (arquivo_termo == NULL)
         {
-            printf("termos e condições não baixados em seu computador");
-            return 2;
+            printf("termos e condições não baixados em seu computador, por favor/n baixe os termos e condições para acessar o conteúdo");
+            return;
         }
 
         fclose(arquivo_termo);
@@ -210,55 +205,61 @@ void termos_e_condicoes()
     }
 
     case 's':
-
+    {
         mostrar_termos_e_condicoes();
 
         break;
-
+    }
     default:
         break;
     }
 }
 
-int main()
+int main(int argc, char *argv[])
+// o argc é um dado inteiro que eu posso usar dentro do main para saber quantos argumentos foram passados
+// para o programa no terminal )
+
+// quando o programa for executado pelo terminal, ex: projeto-c.exe
+// tudo de texto que vier depois do nome do programa, será considerado um argumento
+// e será armazenado no array argv
+
+// lembra que o argv é um array de strings, ou seja, um array de arrays de caracteres
 {
 
     printf("digite seu nome");
     scanf("%22s", user);
-
+    // tem que integrar algumas funções quase prontas neste main aqui(anotei aqui para depois fazer)
     do
     {
+        int opcao_menu = lista_comandos();
 
-        printf("Escolha o serviço nescessário:\n");
-        printf("Digite 1 para realizar cadastro de produto\n");
-        printf("Digite 2 para deletar produtos cadastrados\n");
-        printf("digite 3 para acessar produtos cadastrados\n");
-        printf("digite 4 para lista de comandos");
-        printf("digite 5 para fechar progama\n");
-        scanf("%d", &opcao_menu);
-
-        if (opcao_menu == 1)
+        switch (opcao_menu)
         {
+        case 0: // caso queira parar o ciclo do "do e while"
+            printf("Comando de admin");
+            pause(100);
+            break;
+        case 1:
             cadastrar_produto();
             pause(3);
-        }
-        if (opcao_menu == 2)
-        {
+            break;
+        case 2:
+
             deletar_produtos();
             pause(3);
-        }
-        if (opcao_menu == 3)
-        {
-            deletar_produtos();
+            break;
+        case 3:
+
+            listar_produtos();
             pause(3);
-        }
-        if (opcao_menu == 4)
-        {
-            lista_comandos();
-        }
-        if (opcao_menu == 10)
-        {
+            break;
+        case 4:
+            limpar_tela();
+            break;
+        case 10:
+
             termos_e_condicoes();
+            break;
         }
 
     } while (opcao_menu != 5);

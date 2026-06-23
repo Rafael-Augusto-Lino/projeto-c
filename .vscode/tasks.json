@@ -1,0 +1,23 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Projeto (Make)",
+            "type": "shell",
+            "command": "make",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Compila o projeto C modularizado usando o Makefile."
+        },
+        {
+            "label": "Limpar Build",
+            "type": "shell",
+            "command": "make clean",
+            "group": "none",
+            "problemMatcher": []
+        }
+    ]
+}
